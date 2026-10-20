@@ -1,0 +1,621 @@
+{
+  "name": "EmailMessage",
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "triggerAtHour": 7
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.4,
+      "position": [
+        -304,
+        -32
+      ],
+      "id": "372832fc-3750-41df-bf23-706418223f8d",
+      "name": "Schedule Trigger"
+    },
+    {
+      "parameters": {
+        "url": "https://news.google.com/rss/search?q=India+news+when:1d&hl=en-IN&gl=IN&ceid=IN:en",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.5,
+      "position": [
+        -80,
+        -32
+      ],
+      "id": "b473ac03-23bb-4f2c-a5c9-4fd78983aa1d",
+      "name": "HTTP Request"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "n8n-nodes-base.xml",
+      "typeVersion": 1,
+      "position": [
+        144,
+        -32
+      ],
+      "id": "1ead972a-7368-4f30-9bd1-2ef8b0b119db",
+      "name": "XML"
+    },
+    {
+      "parameters": {
+        "jsCode": "\nconst data = $input.first().json;\n\nconsole.log(JSON.stringify(data, null, 2));\n\nconst channel = data.channel || data.rss?.channel;\n\nif (!channel) {\n  throw new Error(\n    \"Channel not found. Check the XML node output structure.\"\n  );\n}\n\nconst items = channel.item;\n\nconst articles = Array.isArray(items)\n  ? items\n  : items\n    ? Object.values(items)\n    : [];\n\nreturn articles.map(article => ({\n  json: {\n    title: article.title || \"\",\n    description: article.description || \"\",\n    link: article.link || \"\",\n    pubDate: article.pubDate || \"\"\n  }\n}));\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        320,
+        -48
+      ],
+      "id": "e36a4ca2-cb89-4922-8752-632225e2b1d1",
+      "name": "Code in JavaScript"
+    },
+    {
+      "parameters": {
+        "url": "https://news.google.com/rss/search?q=internships+OR+scholarships+OR+hackathons+OR+free+AI+courses+India+when:1d&hl=en-IN&gl=IN&ceid=IN:en",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.5,
+      "position": [
+        -128,
+        176
+      ],
+      "id": "0632c2c3-31da-4328-b056-007fcdd2540e",
+      "name": "HTTP Request1"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "n8n-nodes-base.xml",
+      "typeVersion": 1,
+      "position": [
+        128,
+        176
+      ],
+      "id": "74defd93-4c41-4872-ac8c-14d1d34b7ac7",
+      "name": "XML1"
+    },
+    {
+      "parameters": {
+        "jsCode": "\nconst data = $input.first().json;\n\nconsole.log(JSON.stringify(data, null, 2));\n\nconst channel = data.channel || data.rss?.channel;\n\nif (!channel) {\n  throw new Error(\n    \"Channel not found. Check the XML node output structure.\"\n  );\n}\n\nconst items = channel.item;\n\nconst articles = Array.isArray(items)\n  ? items\n  : items\n    ? Object.values(items)\n    : [];\n\nreturn articles.map(article => ({\n  json: {\n    title: article.title || \"\",\n    description: article.description || \"\",\n    link: article.link || \"\",\n    pubDate: article.pubDate || \"\"\n  }\n}));\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        384,
+        144
+      ],
+      "id": "681be452-42e5-4c84-94cb-59abfa2ef8fa",
+      "name": "Code in JavaScript1"
+    },
+    {
+      "parameters": {
+        "url": "https://news.google.com/rss/search?q=ChatGPT+OR+Gemini+OR+Claude+OR+AI+tools+OR+AI+models+OR+AI+jobs+when:1d&hl=en-IN&gl=IN&ceid=IN:en",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.5,
+      "position": [
+        -128,
+        368
+      ],
+      "id": "e865db43-d392-41fc-9506-abb99080029f",
+      "name": "HTTP Request2"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "n8n-nodes-base.xml",
+      "typeVersion": 1,
+      "position": [
+        144,
+        368
+      ],
+      "id": "f62356aa-fe92-4bae-9664-7bdf7eec61ff",
+      "name": "XML2"
+    },
+    {
+      "parameters": {
+        "jsCode": "\nconst data = $input.first().json;\n\nconsole.log(JSON.stringify(data, null, 2));\n\nconst channel = data.channel || data.rss?.channel;\n\nif (!channel) {\n  throw new Error(\n    \"Channel not found. Check the XML node output structure.\"\n  );\n}\n\nconst items = channel.item;\n\nconst articles = Array.isArray(items)\n  ? items\n  : items\n    ? Object.values(items)\n    : [];\n\nreturn articles.map(article => ({\n  json: {\n    title: article.title || \"\",\n    description: article.description || \"\",\n    link: article.link || \"\",\n    pubDate: article.pubDate || \"\"\n  }\n}));\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        384,
+        336
+      ],
+      "id": "3ccc59fd-1991-4f6e-a45c-32260eab2d49",
+      "name": "Code in JavaScript2"
+    },
+    {
+      "parameters": {
+        "url": "https://www.sciencedaily.com/rss/top/science.xml",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.5,
+      "position": [
+        -160,
+        592
+      ],
+      "id": "98554713-8043-41fd-b07e-757f46b8b50d",
+      "name": "HTTP Request3"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "n8n-nodes-base.xml",
+      "typeVersion": 1,
+      "position": [
+        128,
+        592
+      ],
+      "id": "ccda2bf4-1d4a-4ef1-bc2a-5c0021645e8c",
+      "name": "XML3"
+    },
+    {
+      "parameters": {
+        "jsCode": "\nconst data = $input.first().json;\n\nconsole.log(JSON.stringify(data, null, 2));\n\nconst channel = data.channel || data.rss?.channel;\n\nif (!channel) {\n  throw new Error(\n    \"Channel not found. Check the XML node output structure.\"\n  );\n}\n\nconst items = channel.item;\n\nconst articles = Array.isArray(items)\n  ? items\n  : items\n    ? Object.values(items)\n    : [];\n\nreturn articles.map(article => ({\n  json: {\n    title: article.title || \"\",\n    description: article.description || \"\",\n    link: article.link || \"\",\n    pubDate: article.pubDate || \"\"\n  }\n}));\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        384,
+        576
+      ],
+      "id": "dd6a37d2-e238-4f6c-82bc-be2004be934b",
+      "name": "Code in JavaScript3"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.2,
+      "position": [
+        592,
+        -64
+      ],
+      "id": "29470245-9fd9-4cee-8648-bf95e03b7060",
+      "name": "Merge"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.2,
+      "position": [
+        736,
+        288
+      ],
+      "id": "25933f0e-09ef-4efc-86e7-9b646193a72e",
+      "name": "Merge1"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.2,
+      "position": [
+        1008,
+        288
+      ],
+      "id": "7d19fffd-b08a-4239-9f44-6bcfcfe7ac0e",
+      "name": "Merge2"
+    },
+    {
+      "parameters": {
+        "jsCode": "\nreturn $input.all().map(item => {\n  const data = item.json;\n\n  const cleanText = (text = \"\") =>\n    String(text)\n      .replace(/<[^>]*>/g, \" \")\n      .replace(/&nbsp;/g, \" \")\n      .replace(/&amp;/g, \"&\")\n      .replace(/&quot;/g, '\"')\n      .replace(/&#39;|&apos;/g, \"'\")\n      .replace(/&lt;/g, \"<\")\n      .replace(/&gt;/g, \">\")\n      .replace(/\\s+/g, \" \")\n      .trim();\n\n  return {\n    json: {\n      title: cleanText(data.title),\n      description: cleanText(data.description),\n      link: data.link,\n      pubDate: data.pubDate\n    }\n  };\n});\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1232,
+        288
+      ],
+      "id": "61f8a4ed-655f-4cd8-87e0-0d0406eb04dd",
+      "name": "Code in JavaScript4"
+    },
+    {
+      "parameters": {
+        "jsCode": "\nconst articles = $input.all();\n\nreturn articles\n  .slice(0, 20)\n  .map(item => ({\n    json: item.json\n  }));\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1456,
+        288
+      ],
+      "id": "bc1a6181-74f0-4248-912a-48b6f0819a5d",
+      "name": "Code in JavaScript5"
+    },
+    {
+      "parameters": {
+        "jsCode": "const articles = $input.all();\n\nconst formatted = articles.map((item, index) => {\n  const a = item.json;\n\n  return `${index + 1}. Title: ${a.title || \"\"}\nDescription: ${a.description || \"\"}\nDate: ${a.pubDate || \"\"}\nSource link: ${a.link || \"\"}`;\n});\n\nreturn [{\n  json: {\n    articlesText: formatted.join(\"\\n\\n\")\n  }\n}];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1680,
+        288
+      ],
+      "id": "8c9bcaff-083f-4d37-857f-03eeb5078395",
+      "name": "Code in JavaScript6"
+    },
+    {
+      "parameters": {
+        "modelId": {
+          "__rl": true,
+          "mode": "list",
+          "value": "models/gemini-3-flash-preview"
+        },
+        "messages": {
+          "values": [
+            {
+              "content": "=Create a short daily email titled **Your Daily Knowledge Boost** in simple English.\n\nInclude these sections:\n\n1. **India News:** 2 important updates.\n2. **AI & Technology:** 2 useful updates.\n3. **Student Opportunities:** 2 internships, hackathons, scholarships, or free courses.\n4. **Science Discoveries:** 1 recent discovery.\n5. **Amazing Fact:** 1 surprising, accurate fact.\n6. **English Word:** 1 useful, slightly advanced word, its meaning, pronunciation, and one short example.\n\nRULES:\n- Keep the email short and readable in 2–3 minutes.\n- Use only 1–2 sentences per news item.\n- Use only news supported by the supplied RSS articles. Never invent news, opportunities, or deadlines.\n- **Do not include source links, URLs, citations, or references anywhere.**\n- Use simple headings and bullet points.\n- If a section has no relevant information, write \"No update today.\"\n- Do not add an introduction, conclusion, or quiz.\n- Return plain text only. Do not use Markdown formatting or links.\n**When a category has no relevant articles:**\n- Do not write “No update today.”\n- Instead, provide one useful, short fact, practical tip, or learning insight relevant to that category.\n- For India News, give a useful civic, educational, or general-knowledge insight, not a made-up news story.\n- For AI & Technology, give a practical AI or technology tip.\n- For Student Opportunities, give a career, internship preparation, scholarship application, or skill-building tip. Do not invent real opportunities, deadlines, or application links.\n- For Science Discoveries, give a well-established science fact.\n- Clearly label fallback content as “Quick Fact,” “AI Tip,” “Career Tip,” or “Science Fact,” as appropriate.\n- Never present general knowledge or tips as breaking news or newly announced developments.\n- Do not repeat the same fact or tip elsewhere in the newsletter.\n- Keep fallback content to 1–2 short sentences.\nAdd the fallback instructions I gave you for replacing “No update today” with useful facts and tips.\n\n\n\nLeave the Format HTML Email Code node and Gmail node unchanged.\n\nRSS ARTICLES:\n{{ $json.articlesText }}"
+            }
+          ]
+        },
+        "builtInTools": {},
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.googleGemini",
+      "typeVersion": 1.2,
+      "position": [
+        1904,
+        288
+      ],
+      "id": "59884655-9c33-4885-8e83-0f2bfd772463",
+      "name": "Message a model",
+      "credentials": {
+        "googlePalmApi": {
+          "id": null,
+          "name": "",
+          "__aiGatewayManaged": true
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "caba7fd8-ed9f-43c4-aa95-42d8b893d04d",
+              "name": "emailBody",
+              "value": "={{ $json.content.parts[0].text }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.5,
+      "position": [
+        2272,
+        288
+      ],
+      "id": "af6bb9f4-07c8-4d3b-a6ec-82ea04aa06c8",
+      "name": "Edit Fields"
+    },
+    {
+      "parameters": {
+        "sendTo": "bandarusai61@gmail.com",
+        "subject": "Your Daily Knowledge Boost",
+        "message": "={{ $json.emailHtml }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.2,
+      "position": [
+        2752,
+        288
+      ],
+      "id": "2227f286-338e-459d-a1fd-21c8cd188c95",
+      "name": "Send a message",
+      "webhookId": "d841fa5b-bf01-4592-b304-e18d03b8b118",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "N1ORhsgjhOpcdv0e",
+          "name": "Gmail account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "\nconst text = $input.first().json.emailBody || \"\";\n\nconst escapeHtml = (s) => String(s)\n  .replace(/&/g, \"&amp;\")\n  .replace(/</g, \"&lt;\")\n  .replace(/>/g, \"&gt;\");\n\nconst headings = [\n  \"India News\",\n  \"AI & Technology\",\n  \"Student Opportunities\",\n  \"Science Discoveries\",\n  \"Amazing Fact\",\n  \"English Word\"\n];\n\nconst sections = [];\nlet current = null;\n\nfor (const line of text.split(\"\\n\")) {\n  const cleaned = line.trim();\n  if (!cleaned) continue;\n\n  // Ignore the main email title\n  if (/^Your Daily Knowledge Boost$/i.test(cleaned)) continue;\n\n  const heading = headings.find(h =>\n    cleaned.replace(/^\\d+\\.\\s*/, \"\").replace(/:$/, \"\").trim()\n      .toLowerCase() === h.toLowerCase()\n  );\n\n  if (heading) {\n    current = { heading, body: [] };\n    sections.push(current);\n  } else if (current) {\n    current.body.push(cleaned);\n  }\n}\n\nlet html = `\n<div style=\"font-family:Arial,sans-serif;max-width:650px;margin:auto;color:#dce5e8;line-height:1.7;background:#10131b;padding:16px\">\n  <div style=\"background:#174c3c;color:white;padding:24px;border-radius:12px;margin-bottom:24px\">\n    <h1 style=\"margin:0 0 12px;font-size:30px\">Your Daily Knowledge Boost</h1>\n    <p style=\"margin:0;font-size:17px\">Your daily dose of news, discovery and learning.</p>\n  </div>\n`;\n\nfor (const section of sections) {\n  const body = section.body.map(line =>\n    `<p style=\"margin:8px 0\">${escapeHtml(line.replace(/^-\\s*/, \"\"))}</p>`\n  ).join(\"\");\n\n  html += `\n  <div style=\"padding:20px;margin-bottom:16px;border:1px solid #343941;border-radius:12px;background:#10131b\">\n    <h2 style=\"color:#75c9ae;margin:0 0 16px;font-size:23px\">${escapeHtml(section.heading)}</h2>\n    ${body || \"<p>No content available for this section.</p>\"}\n  </div>`;\n}\n\nhtml += `</div>`;\n\nreturn [{ json: { emailHtml: html } }];\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        2496,
+        288
+      ],
+      "id": "ee19ff9a-9b7f-47f7-af9b-e77d5362a99b",
+      "name": "html format"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Schedule Trigger": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "HTTP Request1",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "HTTP Request2",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "HTTP Request3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request": {
+      "main": [
+        [
+          {
+            "node": "XML",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "XML": {
+      "main": [
+        [
+          {
+            "node": "Code in JavaScript",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request1": {
+      "main": [
+        [
+          {
+            "node": "XML1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "XML1": {
+      "main": [
+        [
+          {
+            "node": "Code in JavaScript1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request2": {
+      "main": [
+        [
+          {
+            "node": "XML2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "XML2": {
+      "main": [
+        [
+          {
+            "node": "Code in JavaScript2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code in JavaScript2": {
+      "main": [
+        [
+          {
+            "node": "Merge1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request3": {
+      "main": [
+        [
+          {
+            "node": "XML3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "XML3": {
+      "main": [
+        [
+          {
+            "node": "Code in JavaScript3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code in JavaScript3": {
+      "main": [
+        [
+          {
+            "node": "Merge1",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Code in JavaScript1": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Code in JavaScript": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Merge1": {
+      "main": [
+        [
+          {
+            "node": "Merge2",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Merge": {
+      "main": [
+        [
+          {
+            "node": "Merge2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Merge2": {
+      "main": [
+        [
+          {
+            "node": "Code in JavaScript4",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code in JavaScript4": {
+      "main": [
+        [
+          {
+            "node": "Code in JavaScript5",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code in JavaScript5": {
+      "main": [
+        [
+          {
+            "node": "Code in JavaScript6",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code in JavaScript6": {
+      "main": [
+        [
+          {
+            "node": "Message a model",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Message a model": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields": {
+      "main": [
+        [
+          {
+            "node": "html format",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "html format": {
+      "main": [
+        [
+          {
+            "node": "Send a message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate"
+  },
+  "versionId": "335958e7-5a73-4c3a-b491-6b77b8fd5ac7",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "86db43327ed36f448ce492e5f102c15e994796d1c173f2a67d2d662370e43957"
+  },
+  "nodeGroups": [],
+  "id": "GupTfdQ0tirn2Ue0",
+  "tags": []
+}
